@@ -7,30 +7,32 @@ abstract class SafeApiRequest {
 
     suspend fun <T : Any> apiRequest(
         call: suspend () -> Response<T>
-    ) = flow {
-        emit(Result.loading(null))
-        try {
-            val response = call.invoke()
-            if (response.isSuccessful)
-                emit(
-                    Result.success(
-                        data = response.body()
+    ) =
+        flow {
+            println("safe api: "+Thread.currentThread().name)
+            emit(Result.loading(null))
+            try {
+                val response = call.invoke()
+                if (response.isSuccessful)
+                    emit(
+                        Result.success(
+                            data = response.body()
+                        )
                     )
-                )
-            else
+                else
+                    emit(
+                        Result.error(
+                            msg = "Connection failed: ${response.errorBody()?.string()}",
+                            data = null
+                        )
+                    )
+            } catch (ex: Exception) {
                 emit(
                     Result.error(
-                        msg = "Connection failed: ${response.errorBody()?.string()}",
+                        msg = "Connection error: ${ex.message}",
                         data = null
                     )
                 )
-        } catch (ex: Exception) {
-            emit(
-                Result.error(
-                    msg = "Connection error: ${ex.message}",
-                    data = null
-                )
-            )
+            }
         }
-    }
 }

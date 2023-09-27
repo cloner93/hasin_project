@@ -9,8 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitNetwork constructor(
+@Singleton
+class RetrofitNetwork @Inject constructor(
     okhttpCallFactory: Call.Factory,
 ) : TmdbClientNetwork {
     private val networkApi = Retrofit.Builder()
@@ -37,7 +40,7 @@ class RetrofitNetwork constructor(
     ): Response<FullMovieDetail> = networkApi.getMovie(
         movieId = movieId,
         language = language,
-        append_to_response = appendToResponse
+        appendToResponse = appendToResponse
     )
 }
 
@@ -54,7 +57,7 @@ private interface RetrofitNetworkApi {
     suspend fun getMovie(
         @Path(value = "movie_id") movieId: Int,
         @Query(value = "language") language: String?,
-        @Query(value = "append_to_response") append_to_response: String?,
+        @Query(value = "append_to_response") appendToResponse: String?,
     ): Response<FullMovieDetail>
 }
 

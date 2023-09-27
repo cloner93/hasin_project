@@ -1,4 +1,4 @@
-package com.milad.hasin_project.ui.theme
+package com.milad.hasin_project.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

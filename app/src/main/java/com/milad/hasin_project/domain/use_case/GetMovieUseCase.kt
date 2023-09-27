@@ -1,16 +1,22 @@
 package com.milad.hasin_project.domain.use_case
 
 import com.milad.hasin_project.data.network.TmdbClientNetwork
+import com.milad.hasin_project.data.utils.Result
+import com.milad.hasin_project.data.utils.SafeApiRequest
 import com.milad.hasin_project.domain.model.FullMovieDetail
 import kotlinx.coroutines.flow.Flow
-import com.milad.hasin_project.data.utils.SafeApiRequest
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetMovieUseCase(private val network: TmdbClientNetwork) {
-    operator fun invoke(
+@Singleton
+class GetMovieUseCase
+@Inject constructor(
+    private val network: TmdbClientNetwork
+) : SafeApiRequest() {
+    suspend operator fun invoke(
         movieId: Int,
-        language: String?,
-        append_to_response: String?
+        language: String? = null,
+        appendToResponse: String? = null
     ): Flow<Result<FullMovieDetail>> =
-       TODO(" apiRequest { network.getMovie(movieId, language, append_to_response) }")
-
+        apiRequest { network.getMovie(movieId, language, appendToResponse) }
 }

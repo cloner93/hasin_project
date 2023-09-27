@@ -4,8 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.milad.hasin_project.data.network.TmdbClientNetwork
 import com.milad.tmdb_client.core.model.Movie
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PopularMoviesPagingSource constructor(
+@Singleton
+class PopularMoviesPagingSource @Inject constructor(
     private val network: TmdbClientNetwork
 ) : PagingSource<Int, Movie>() {
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {

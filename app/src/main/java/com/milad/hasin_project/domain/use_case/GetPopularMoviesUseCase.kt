@@ -6,8 +6,11 @@ import androidx.paging.PagingData
 import com.milad.hasin_project.data.paging.PopularMoviesPagingSource
 import com.milad.tmdb_client.core.model.Movie
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetPopularMoviesUseCase(private val paging: PopularMoviesPagingSource) {
+@Singleton
+class GetPopularMoviesUseCase @Inject constructor(private val paging: PopularMoviesPagingSource) {
      operator fun invoke(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(pageSize = 20),

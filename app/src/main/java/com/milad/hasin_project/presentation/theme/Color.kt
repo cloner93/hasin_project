@@ -1,4 +1,4 @@
-package com.milad.hasin_project.ui.theme
+package com.milad.hasin_project.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
