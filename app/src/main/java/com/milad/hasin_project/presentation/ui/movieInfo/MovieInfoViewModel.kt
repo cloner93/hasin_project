@@ -7,12 +7,15 @@ import com.milad.hasin_project.data.utils.Status
 import com.milad.hasin_project.domain.model.FullMovieDetail
 import com.milad.hasin_project.domain.use_case.GetMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import java.io.Serializable
 import javax.inject.Inject
 
@@ -21,8 +24,12 @@ class MovieInfoViewModel @Inject constructor(
     private val useCase: GetMovieUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    private val _event = MutableStateFlow<MovieInfoEvent?>(null)
+    val event: StateFlow<MovieInfoEvent?> = _event.asStateFlow()
 
-    private val _state = popularMovieState((savedStateHandle.get<String>("movie_id")?.toInt()) ?: 0)
+    val movieId = (savedStateHandle.get<String>("movie_id")?.toInt()) ?: 0
+
+    private val _state = popularMovieState(movieId)
     val state: StateFlow<MovieInfoState> = _state
         .stateIn(
             viewModelScope,
@@ -32,31 +39,39 @@ class MovieInfoViewModel @Inject constructor(
 
     private fun popularMovieState(
         movieId: Int
-    ): Flow<MovieInfoState> {
-        var result: StateFlow<MovieInfoState> = MutableStateFlow(MovieInfoState.Loading)
-
-        viewModelScope.launch {
-            useCase(movieId).collect { res ->
-                when (res.status) {
-                    Status.SUCCESS -> {
-                        if (res.data != null)
-                            MovieInfoState.Success(res.data)
-                        else
-                            MovieInfoState.Error(Throwable("we can't found info for this movie!"))
-                    }
-
-                    Status.ERROR -> {
-                        MovieInfoState.Error(Throwable(res.message))
-                    }
-
-                    Status.LOADING -> {
-                        MovieInfoState.Loading
+    ): Flow<MovieInfoState> = flow {
+        useCase(movieId).collect { res ->
+            when (res.status) {
+                Status.SUCCESS -> {
+                    if (res.data != null) {
+                        emit(MovieInfoState.Success(res.data))
+                    } else {
+                        emit(MovieInfoState.Error(Throwable("we can't found info for this movie!")))
                     }
                 }
-            }
 
+                Status.ERROR -> {
+                    emit(MovieInfoState.Error(Throwable(res.message)))
+                }
+
+                Status.LOADING -> {
+                    emit(MovieInfoState.Loading)
+                }
+            }
         }
-        return result
+    }.flowOn(Dispatchers.IO)
+
+    fun onBackClicked() {
+        _event.value = MovieInfoEvent.onBack
+    }
+
+    fun onShareClicked() {
+        _event.value = MovieInfoEvent.onBack
+    }
+
+    fun onRetryClicked() {
+        _event.value = MovieInfoEvent.onRetry
+        popularMovieState(movieId)
     }
 }
 
@@ -64,4 +79,10 @@ sealed interface MovieInfoState : Serializable {
     object Loading : MovieInfoState
     data class Error(val throwable: Throwable) : MovieInfoState
     data class Success(val data: FullMovieDetail) : MovieInfoState
+}
+
+sealed class MovieInfoEvent {
+    object onBack : MovieInfoEvent()
+    object onShare : MovieInfoEvent()
+    object onRetry : MovieInfoEvent()
 }
