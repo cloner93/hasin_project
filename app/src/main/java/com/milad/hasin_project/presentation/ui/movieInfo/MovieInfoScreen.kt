@@ -42,7 +42,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -92,7 +91,7 @@ fun MovieInfoScreen(
         is MovieInfoState.Success -> {
             MovieListScreen(
                 movieInfo = (state as MovieInfoState.Success).data, {
-                    viewModel.onBackClicked()
+                    navController.popBackStack()
                 }
             )
         }
@@ -132,15 +131,6 @@ fun MovieInfoScreen(
                 }
             }
         }
-    }
-
-    when (viewModel.event.collectAsState().value) {
-        is MovieInfoEvent.onBack -> {
-            navController.popBackStack()
-        }
-        is MovieInfoEvent.onShare -> {}
-        is MovieInfoEvent.onRetry -> {}
-        else -> {}
     }
 }
 

@@ -55,6 +55,7 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.compose.ktx)
     implementation(libs.androidx.activity.compose)
 
     // Hilt Dependency Injection

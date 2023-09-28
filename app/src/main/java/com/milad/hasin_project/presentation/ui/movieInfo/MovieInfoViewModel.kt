@@ -24,8 +24,6 @@ class MovieInfoViewModel @Inject constructor(
     private val useCase: GetMovieUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _event = MutableStateFlow<MovieInfoEvent?>(null)
-    val event: StateFlow<MovieInfoEvent?> = _event.asStateFlow()
 
     val movieId = (savedStateHandle.get<String>("movie_id")?.toInt()) ?: 0
 
@@ -61,16 +59,7 @@ class MovieInfoViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun onBackClicked() {
-        _event.value = MovieInfoEvent.onBack
-    }
-
-    fun onShareClicked() {
-        _event.value = MovieInfoEvent.onBack
-    }
-
     fun onRetryClicked() {
-        _event.value = MovieInfoEvent.onRetry
         popularMovieState(movieId)
     }
 }

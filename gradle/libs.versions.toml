@@ -3,10 +3,10 @@ androidGradlePlugin = "8.1.0"
 androidxCore = "1.12.0"
 androidxLifecycle = "2.6.2"
 androidxActivity = "1.7.2"
-androidxComposeUi = "1.5.1"
+androidxComposeUi = "1.5.2"
 androidxComposeCompiler = "1.5.3"
 androidxComposeMaterial3 = "1.1.2"
-androidxComposeMaterial3Icon = "1.5.1"
+androidxComposeMaterial3Icon = "1.5.2"
 androidxHilt = "1.0.0"
 androidxNavigation = "2.7.3"
 androidxTestExt = "1.1.5"
@@ -42,6 +42,7 @@ androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-mani
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-compose-ktx = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
