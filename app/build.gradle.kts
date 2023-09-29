@@ -17,9 +17,15 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.milad.hasin_project.testing.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
@@ -95,4 +101,22 @@ dependencies {
     implementation(libs.androidx.compose.material3.icon)
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // Hilt and instrumented tests.
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    // Hilt and Robolectric tests.
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler)
+
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.androidx.test.core)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.test.ext.junit)
+    implementation(libs.kotlinx.coroutines.test)
+
+    implementation(libs.androidx.test.runner)
+    implementation(libs.hilt.android.testing)
 }

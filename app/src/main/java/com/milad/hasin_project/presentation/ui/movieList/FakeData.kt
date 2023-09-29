@@ -1,6 +1,7 @@
-package com.milad.tmdb_client.feature.movielist
+package com.milad.hasin_project.presentation.ui.movieList
 
-import com.milad.tmdb_client.core.model.Movie
+import com.milad.hasin_project.domain.model.FullMovieDetail
+import com.milad.hasin_project.domain.model.Movie
 
 val movie = Movie(
     posterPath = "https://m.media-amazon.com/images/I/51iJAwDnpVL._SX300_SY300_QL70_FMwebp_.jpg",
@@ -19,12 +20,41 @@ val movie = Movie(
     voteAverage = 5.91
 )
 
+val fullMovieDetail = FullMovieDetail(
+    adult=false,
+            backdropPath="",
+            belongsToCollection="",
+            budget=1,
+            genres= listOf(),
+            homepage="",
+            id=1,
+            imdbId="",
+            originalLanguage="",
+            originalTitle="",
+            overview="",
+            popularity=1.0,
+            posterPath="",
+            productionCompanies= listOf(),
+            productionCountries= listOf(),
+            releaseDate="",
+            revenue=1,
+            runtime=1,
+            spokenLanguages= listOf(),
+            status="",
+            tagline="",
+            title="",
+            video=false,
+            voteAverage=1.0,
+            voteCount=1,
+
+)
+
 
 val fakeMovieList = listOf(
-    movie,movie,movie,
-    movie,movie,movie,
-    movie,movie,movie,
-    movie,movie,movie,
-    movie,movie,movie,
+    movie, movie, movie,
+    movie, movie, movie,
+    movie, movie, movie,
+    movie, movie, movie,
+    movie, movie, movie,
     movie
 )
