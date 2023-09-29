@@ -65,6 +65,7 @@ class PopularMoviesPagingSourceTest {
         )
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source load - failure - http error`() = runTest(testDispatcher) {
         val error = RuntimeException("404", Throwable())

@@ -9,10 +9,8 @@ import com.milad.hasin_project.domain.use_case.GetMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -27,7 +25,7 @@ class MovieInfoViewModel @Inject constructor(
 
     val movieId = (savedStateHandle.get<String>("movie_id")?.toInt()) ?: 0
 
-    private val _state = popularMovieState(movieId)
+    private val _state = getMovieInfoState(movieId)
     val state: StateFlow<MovieInfoState> = _state
         .stateIn(
             viewModelScope,
@@ -35,7 +33,7 @@ class MovieInfoViewModel @Inject constructor(
             MovieInfoState.Loading
         )
 
-    private fun popularMovieState(
+    private fun getMovieInfoState(
         movieId: Int
     ): Flow<MovieInfoState> = flow {
         useCase(movieId).collect { res ->
@@ -60,7 +58,7 @@ class MovieInfoViewModel @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
     fun onRetryClicked() {
-        popularMovieState(movieId)
+        getMovieInfoState(movieId)
     }
 }
 
