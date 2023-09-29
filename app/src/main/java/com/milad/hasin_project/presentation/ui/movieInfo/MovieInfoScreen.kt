@@ -68,7 +68,7 @@ import coil.request.ImageRequest
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.MainAxisAlignment
 import com.milad.hasin_project.domain.model.FullMovieDetail
-import com.milad.tmdb_client.core.model.Genres
+import com.milad.hasin_project.domain.model.Genres
 
 private val headerHeight = 250.dp
 private val toolbarHeight = 56.dp

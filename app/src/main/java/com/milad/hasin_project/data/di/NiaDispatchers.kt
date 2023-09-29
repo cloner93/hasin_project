@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.milad.hasin_project.data.network
+package com.milad.hasin_project.data.di
 
 import javax.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME

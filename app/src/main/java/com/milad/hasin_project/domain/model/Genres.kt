@@ -1,4 +1,4 @@
-package com.milad.tmdb_client.core.model
+package com.milad.hasin_project.domain.model
 
 data class Genres(
     val id: Int,

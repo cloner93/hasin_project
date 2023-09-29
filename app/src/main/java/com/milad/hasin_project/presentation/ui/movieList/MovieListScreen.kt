@@ -26,8 +26,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.milad.hasin_project.R
-import com.milad.tmdb_client.core.model.Movie
-import com.milad.tmdb_client.feature.movielist.utils.makePosterURL
+import com.milad.hasin_project.domain.model.Movie
+import com.milad.hasin_project.presentation.ui.movieList.utils.makePosterURL
 
 @SuppressLint("RememberReturnType", "StateFlowValueCalledInComposition")
 @Composable

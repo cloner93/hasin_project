@@ -1,6 +1,6 @@
 package com.milad.hasin_project.domain.use_case
 
-import com.milad.hasin_project.data.network.TmdbClientNetwork
+import com.milad.hasin_project.data.TmdbClientNetwork
 import com.milad.hasin_project.data.utils.Result
 import com.milad.hasin_project.data.utils.SafeApiRequest
 import com.milad.hasin_project.domain.model.FullMovieDetail

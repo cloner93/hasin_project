@@ -9,7 +9,6 @@ abstract class SafeApiRequest {
         call: suspend () -> Response<T>
     ) =
         flow {
-            println("safe api: "+Thread.currentThread().name)
             emit(Result.loading(null))
             try {
                 val response = call.invoke()

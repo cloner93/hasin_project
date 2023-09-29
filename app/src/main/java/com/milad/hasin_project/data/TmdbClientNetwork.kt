@@ -1,7 +1,7 @@
-package com.milad.hasin_project.data.network
+package com.milad.hasin_project.data
 
 import com.milad.hasin_project.domain.model.FullMovieDetail
-import com.milad.tmdb_client.core.model.PopularMoviesResponse
+import com.milad.hasin_project.domain.model.PopularMoviesResponse
 import retrofit2.Response
 
 interface TmdbClientNetwork {

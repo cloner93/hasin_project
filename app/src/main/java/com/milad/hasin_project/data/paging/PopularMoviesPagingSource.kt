@@ -2,8 +2,8 @@ package com.milad.hasin_project.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.milad.hasin_project.data.network.TmdbClientNetwork
-import com.milad.tmdb_client.core.model.Movie
+import com.milad.hasin_project.data.TmdbClientNetwork
+import com.milad.hasin_project.domain.model.Movie
 import javax.inject.Inject
 import javax.inject.Singleton
 

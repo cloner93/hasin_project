@@ -69,9 +69,3 @@ sealed interface MovieInfoState : Serializable {
     data class Error(val throwable: Throwable) : MovieInfoState
     data class Success(val data: FullMovieDetail) : MovieInfoState
 }
-
-sealed class MovieInfoEvent {
-    object onBack : MovieInfoEvent()
-    object onShare : MovieInfoEvent()
-    object onRetry : MovieInfoEvent()
-}

@@ -1,4 +1,4 @@
-package com.milad.hasin_project.data.network
+package com.milad.hasin_project.data.di
 
 import dagger.Module
 import dagger.Provides

@@ -5,9 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.milad.hasin_project.domain.use_case.GetPopularMoviesUseCase
-import com.milad.tmdb_client.core.model.Movie
+import com.milad.hasin_project.domain.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow

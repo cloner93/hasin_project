@@ -1,10 +1,6 @@
 package com.milad.hasin_project.domain.model
 
 import com.google.gson.annotations.SerializedName
-import com.milad.tmdb_client.core.model.Genres
-import com.milad.tmdb_client.core.model.ProductionCompanies
-import com.milad.tmdb_client.core.model.ProductionCountries
-import com.milad.tmdb_client.core.model.SpokenLanguages
 
 data class FullMovieDetail(
     @SerializedName("adult")
