@@ -25,7 +25,7 @@ class PopularMoviesViewModel @Inject constructor(
         getPopularMovies()
     }
 
-    private fun getPopularMovies() {
+    fun getPopularMovies() {
         _uiState.value = useCase().cachedIn(viewModelScope)
     }
 }
