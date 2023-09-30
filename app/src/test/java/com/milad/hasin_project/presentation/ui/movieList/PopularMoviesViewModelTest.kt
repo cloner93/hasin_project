@@ -16,6 +16,9 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
+/**
+ * Unit test for the [PopularMoviesViewModel] class.
+ */
 @ExperimentalCoroutinesApi
 class PopularMoviesViewModelTest {
 
@@ -24,19 +27,24 @@ class PopularMoviesViewModelTest {
     @Mock
     private lateinit var useCase: GetPopularMoviesUseCase
 
+    // Dispatcher for testing
     private val testDispatcher = StandardTestDispatcher()
 
+    // Setup before each test
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
     }
 
+    // Test for validating that getPopularMovies updates uiState
     @Test
     fun `getPopularMovies should update uiState`() = runTest(testDispatcher) {
-        val testData: Flow<PagingData<Movie>> =flow{ emit(PagingData.from(listOf(movie)))}
+        // Mock data for the use case
+        val testData: Flow<PagingData<Movie>> = flow { emit(PagingData.from(listOf(movie))) }
 
         `when`(useCase.invoke()).thenReturn(testData)
 
+        // Create the view model
         viewModel = PopularMoviesViewModel(useCase)
 
         val uiStateValue = viewModel.uiState.first().first()

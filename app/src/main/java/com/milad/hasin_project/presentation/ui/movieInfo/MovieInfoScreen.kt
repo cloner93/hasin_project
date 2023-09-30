@@ -73,6 +73,17 @@ import com.milad.hasin_project.domain.model.Genres
 private val headerHeight = 250.dp
 private val toolbarHeight = 56.dp
 
+/**
+ * The `MovieInfoScreen` composable function represents the UI for displaying detailed information
+ * about a movie. It utilizes Jetpack Compose for building the UI components.
+ *
+ * @param viewModel The [MovieInfoViewModel] used to manage UI-related data for the screen.
+ * @param navController The [NavHostController] for navigation within the app.
+ *
+ * @see Composable
+ * @see MovieInfoViewModel
+ * @see NavHostController
+ */
 @Composable
 fun MovieInfoScreen(
     viewModel: MovieInfoViewModel = hiltViewModel(),
@@ -133,10 +144,17 @@ fun MovieInfoScreen(
         }
     }
 }
-
 /**
- * we for implement this part of project got help from here:
- * @see <a href="https://medium.com/@morad.azzouzi/collapsing-toolbar-with-parallax-effect-and-curve-motion-in-jetpack-compose-9ed1c3c0393f">Medium</a>
+ * The `MovieListScreen` composable function represents the main content of the Movie Info screen,
+ * displaying information about a movie, including its title, poster, and general details.
+ *
+ * @param movieInfo The [FullMovieDetail] object containing details about the movie.
+ * @param onBack The callback to be invoked when the back button is clicked.
+ * @param onShare The callback to be invoked when the share button is clicked.
+ * @param onFavorite The callback to be invoked when the favorite button is clicked.
+ *
+ * @see Composable
+ * @see FullMovieDetail
  */
 @Composable
 fun MovieListScreen(
@@ -175,6 +193,18 @@ fun MovieListScreen(
     }
 }
 
+/**
+ * The `Header` composable function represents the header section of the Movie Info screen,
+ * displaying the movie's backdrop image.
+ *
+ * @param scroll The [ScrollState] used to control the scroll position.
+ * @param headerHeightPx The height of the header in pixels.
+ * @param backdropPath The path to the movie's backdrop image.
+ * @param movieTitle The title of the movie.
+ *
+ * @see Composable
+ * @see ScrollState
+ */
 @Composable
 private fun Header(
     scroll: ScrollState,
@@ -204,6 +234,21 @@ private fun Header(
     }
 }
 
+/**
+ * The `Toolbar` composable function represents the toolbar section of the Movie Info screen,
+ * displaying the movie title, back button, share button, and favorite button.
+ *
+ * @param movieTitle The title of the movie.
+ * @param scroll The [ScrollState] used to control the scroll position.
+ * @param headerHeightPx The height of the header in pixels.
+ * @param toolbarHeightPx The height of the toolbar in pixels.
+ * @param onBack The callback to be invoked when the back button is clicked.
+ * @param onShare The callback to be invoked when the share button is clicked.
+ * @param onFavorite The callback to be invoked when the favorite button is clicked.
+ *
+ * @see Composable
+ * @see ScrollState
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Toolbar(
@@ -280,6 +325,17 @@ private fun Toolbar(
     )
 }
 
+/**
+ * The `Body` composable function represents the body section of the Movie Info screen,
+ * displaying detailed information about the movie, including its poster, title, and general details.
+ *
+ * @param movie The [FullMovieDetail] object containing details about the movie.
+ * @param scroll The [ScrollState] used to control the scroll position.
+ *
+ * @see Composable
+ * @see FullMovieDetail
+ * @see ScrollState
+ */
 @Composable
 private fun Body(
     movie: FullMovieDetail,

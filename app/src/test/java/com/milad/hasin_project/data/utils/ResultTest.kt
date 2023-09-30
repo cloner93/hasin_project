@@ -5,7 +5,12 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import org.junit.Test
 
-class ResultTest() {
+/**
+ * Unit test for the [Result] class.
+ */
+class ResultTest {
+
+    // Test case for a success result
     @Test
     fun test_success_result() {
         val actual = Result.success("Success")
@@ -17,6 +22,7 @@ class ResultTest() {
         assertNull("test result message", actual.message)
     }
 
+    // Test case for an error result
     @Test
     fun test_error_result() {
         val actual = Result.error(msg = "error", data = null)
@@ -28,6 +34,7 @@ class ResultTest() {
         assertEquals("test result message", "error", actual.message)
     }
 
+    // Test case for a loading result
     @Test
     fun test_loading_result() {
         val actual = Result.loading(data = null)

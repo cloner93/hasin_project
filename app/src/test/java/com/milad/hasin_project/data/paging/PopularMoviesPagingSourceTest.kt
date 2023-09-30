@@ -1,4 +1,4 @@
- package com.milad.hasin_project.data.paging
+package com.milad.hasin_project.data.paging
 
 import androidx.paging.PagingSource
 import com.milad.hasin_project.data.dataSource.fake.FakeTmdbNetworkData
@@ -15,25 +15,31 @@ import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-
 /**
+ * Unit test for [PopularMoviesPagingSource].
  * @see <a href="https://medium.com/@mohamed.gamal.elsayed/android-how-to-test-paging-3-pagingsource-433251ade028">Android — How to test Paging 3 (PagingSource)?</a>
  */
 class PopularMoviesPagingSourceTest {
+
+    // Mocked network instance
     @Mock
     lateinit var network: FakeTmdbNetworkData
+
+    // Subject under test
     private lateinit var pagingSource: PopularMoviesPagingSource
 
+    // Test dispatcher for coroutines
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
 
+    // Setting up the test
     @Before
     fun before() {
         MockitoAnnotations.openMocks(this)
-
         pagingSource = PopularMoviesPagingSource(network)
     }
 
+    // Test data
     companion object {
         private val movie = Movie(
             posterPath = "/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg",
@@ -65,6 +71,7 @@ class PopularMoviesPagingSourceTest {
         )
     }
 
+    // Test case for loading popular movies with a failure due to HTTP error
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source load - failure - http error`() = runTest(testDispatcher) {
@@ -80,20 +87,18 @@ class PopularMoviesPagingSourceTest {
             )
         )
 
-        assertEquals(
-            "failure - http error",
-            expected,
-            actual
-        )
+        assertEquals("failure - http error", expected, actual)
     }
 
+    // Test case for loading popular movies with a failure due to receiving null response
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source load - failure - received null`() = runTest(testDispatcher) {
         given(network.getPopularMovies(any(), any(), any())).willReturn(null)
 
-        val expected =
-            PagingSource.LoadResult.Error<Int, Movie>(NullPointerException("Cannot invoke \"com.milad.hasin_project.domain.model.PopularMoviesResponse.getMovies()\" because \"response\" is null"))
+        val expected = PagingSource.LoadResult.Error<Int, Movie>(
+            NullPointerException("Cannot invoke \"com.milad.hasin_project.domain.model.PopularMoviesResponse.getMovies()\" because \"response\" is null")
+        )
         val actual = pagingSource.load(
             PagingSource.LoadParams.Refresh(
                 key = 0,
@@ -102,13 +107,10 @@ class PopularMoviesPagingSourceTest {
             )
         )
 
-        assertEquals(
-            "failure - received null",
-            expected.toString(),
-            actual.toString()
-        )
+        assertEquals("failure - received null", expected.toString(), actual.toString())
     }
 
+    // Test case for loading popular movies with a successful refresh
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source refresh - success`() = runTest(testDispatcher) {
@@ -128,13 +130,10 @@ class PopularMoviesPagingSourceTest {
             )
         )
 
-        assertEquals(
-            "refresh - success",
-            expected,
-            actual
-        )
+        assertEquals("refresh - success", expected, actual)
     }
 
+    // Test case for loading popular movies with a successful append
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source append - success`() = runTest(testDispatcher) {
@@ -154,13 +153,10 @@ class PopularMoviesPagingSourceTest {
             )
         )
 
-        assertEquals(
-            "append - success",
-            expected,
-            actual
-        )
+        assertEquals("append - success", expected, actual)
     }
 
+    // Test case for loading popular movies with a successful prepend
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test paging source prepend - success`() = runTest(testDispatcher) {
@@ -180,10 +176,6 @@ class PopularMoviesPagingSourceTest {
             )
         )
 
-        assertEquals(
-            "prepend - success",
-            expected,
-            actual
-        )
+        assertEquals("prepend - success", expected, actual)
     }
 }

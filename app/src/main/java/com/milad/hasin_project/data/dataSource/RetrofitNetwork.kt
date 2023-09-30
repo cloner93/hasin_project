@@ -12,11 +12,24 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
-
+/**
+ * The `RetrofitNetwork` class is a singleton class that implements the [TmdbClientNetwork] interface
+ * using Retrofit for making network requests to the TMDb API.
+ *
+ * @property okhttpCallFactory The OkHttpClient factory for making HTTP requests.
+ *
+ * @see Singleton
+ * @see Inject
+ * @see TmdbClientNetwork
+ */
 @Singleton
 class RetrofitNetwork @Inject constructor(
     okhttpCallFactory: Call.Factory,
 ) : TmdbClientNetwork {
+
+    /**
+     * The network API instance for making API requests.
+     */
     private val networkApi = Retrofit.Builder()
         .baseUrl(baseUrl)
         .callFactory(okhttpCallFactory)
@@ -24,6 +37,9 @@ class RetrofitNetwork @Inject constructor(
         .build()
         .create(RetrofitNetworkApi::class.java)
 
+    /**
+     * Implementation of the [getPopularMovies] method from [TmdbClientNetwork].
+     */
     override suspend fun getPopularMovies(
         page: Int?,
         language: String?,
@@ -34,6 +50,9 @@ class RetrofitNetwork @Inject constructor(
         region = region
     )
 
+    /**
+     * Implementation of the [getMovie] method from [TmdbClientNetwork].
+     */
     override suspend fun getMovie(
         movieId: Int,
         language: String?,
@@ -45,8 +64,14 @@ class RetrofitNetwork @Inject constructor(
     )
 }
 
+/**
+ * The RetrofitNetworkApi interface defines the API endpoints for making network requests.
+ */
 private interface RetrofitNetworkApi {
 
+    /**
+     * Retrieves a list of popular movies.
+     */
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query(value = "page") page: Int?,
@@ -54,6 +79,9 @@ private interface RetrofitNetworkApi {
         @Query(value = "region") region: String?,
     ): PopularMoviesResponse
 
+    /**
+     * Retrieves details for a specific movie.
+     */
     @GET("movie/{movie_id}")
     suspend fun getMovie(
         @Path(value = "movie_id") movieId: Int,
@@ -62,4 +90,7 @@ private interface RetrofitNetworkApi {
     ): Response<FullMovieDetail>
 }
 
+/**
+ * The base URL for the TMDb API.
+ */
 private const val baseUrl = "http://api.themoviedb.org/3/"

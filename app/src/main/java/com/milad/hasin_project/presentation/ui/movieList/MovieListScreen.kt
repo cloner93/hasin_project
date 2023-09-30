@@ -29,6 +29,17 @@ import com.milad.hasin_project.R
 import com.milad.hasin_project.domain.model.Movie
 import com.milad.hasin_project.presentation.ui.movieList.utils.makePosterURL
 
+/**
+ * The `MovieListScreen` composable function represents the UI for displaying a list of popular movies.
+ * It utilizes Jetpack Compose for building the UI components.
+ *
+ * @param viewModel The [PopularMoviesViewModel] used to manage UI-related data for the screen.
+ * @param navController The [NavHostController] for navigation within the app.
+ *
+ * @see Composable
+ * @see PopularMoviesViewModel
+ * @see NavHostController
+ */
 @SuppressLint("RememberReturnType", "StateFlowValueCalledInComposition")
 @Composable
 fun MovieListScreen(
@@ -40,6 +51,16 @@ fun MovieListScreen(
     }
 }
 
+/**
+ * The `MovieListScreen` composable function with LazyPagingItems represents the internal implementation
+ * of the Movie List screen, displaying a list of movies using LazyVerticalGrid.
+ *
+ * @param movieList The [LazyPagingItems] representing the list of movies.
+ * @param onItemClick The callback to be invoked when a movie item is clicked.
+ *
+ * @see Composable
+ * @see LazyPagingItems
+ */
 @Composable
 internal fun MovieListScreen(movieList: LazyPagingItems<Movie>, onItemClick: (Int) -> Unit) {
 
@@ -54,6 +75,17 @@ internal fun MovieListScreen(movieList: LazyPagingItems<Movie>, onItemClick: (In
     }
 }
 
+/**
+ * The `Content` composable function represents the content of the Movie List screen.
+ *
+ * @param modifier The [Modifier] for applying layout modifications.
+ * @param movieList The [LazyPagingItems] representing the list of movies.
+ * @param onClick The callback to be invoked when a movie item is clicked.
+ *
+ * @see Composable
+ * @see Modifier
+ * @see LazyPagingItems
+ */
 @Composable
 private fun Content(
     modifier: Modifier = Modifier, movieList: LazyPagingItems<Movie>, onClick: (Int) -> Unit
@@ -63,6 +95,15 @@ private fun Content(
     )
 }
 
+/**
+ * The `MyTopAppBar` composable function represents the top app bar of the Movie List screen,
+ * displaying the title and a sort button.
+ *
+ * @param title The title to be displayed in the app bar.
+ * @param onClick The callback to be invoked when the sort button is clicked.
+ *
+ * @see Composable
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MyTopAppBar(
@@ -82,6 +123,17 @@ private fun MyTopAppBar(
     })
 }
 
+/**
+ * The `MovieLazyList` composable function represents the LazyVerticalGrid for displaying the list of movies.
+ *
+ * @param modifier The [Modifier] for applying layout modifications.
+ * @param movieList The [LazyPagingItems] representing the list of movies.
+ * @param onClick The callback to be invoked when a movie item is clicked.
+ *
+ * @see Composable
+ * @see Modifier
+ * @see LazyPagingItems
+ */
 @Composable
 private fun MovieLazyList(
     modifier: Modifier = Modifier, movieList: LazyPagingItems<Movie>, onClick: (Int) -> Unit
@@ -175,6 +227,17 @@ private fun MovieLazyList(
     }
 }
 
+/**
+ * The `MovieListItem` composable function represents an individual item in the movie list.
+ *
+ * @param movie The [Movie] object representing the movie details.
+ * @param modifier The [Modifier] for applying layout modifications.
+ * @param onClick The callback to be invoked when the movie item is clicked.
+ *
+ * @see Composable
+ * @see Movie
+ * @see Modifier
+ */
 @Composable
 private fun MovieListItem(
     movie: Movie, modifier: Modifier = Modifier, onClick: (Int) -> Unit

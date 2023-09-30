@@ -17,14 +17,33 @@ import kotlinx.coroutines.flow.stateIn
 import java.io.Serializable
 import javax.inject.Inject
 
+/**
+ * The `MovieInfoViewModel` class is a ViewModel for managing the UI-related data of the
+ * Movie Info screen. It utilizes the [GetMovieUseCase] to fetch movie details.
+ *
+ * @param useCase The use case responsible for retrieving movie details.
+ * @param savedStateHandle A handle to saved state, allowing access to data across ViewModel
+ * lifecycle events.
+ *
+ * @see ViewModel
+ * @see HiltViewModel
+ * @see GetMovieUseCase
+ */
 @HiltViewModel
 class MovieInfoViewModel @Inject constructor(
     private val useCase: GetMovieUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    /**
+     * The movie ID extracted from the saved state handle.
+     */
     val movieId = (savedStateHandle.get<String>("movie_id")?.toInt()) ?: 0
 
+    /**
+     * Private function to get the state flow of [MovieInfoState] based on the provided
+     * [movieId].
+     */
     private val _state = getMovieInfoState(movieId)
     val state: StateFlow<MovieInfoState> = _state
         .stateIn(
@@ -33,6 +52,9 @@ class MovieInfoViewModel @Inject constructor(
             MovieInfoState.Loading
         )
 
+    /**
+     * Function to retrieve the state flow of [MovieInfoState] based on the provided [movieId].
+     */
     private fun getMovieInfoState(
         movieId: Int
     ): Flow<MovieInfoState> = flow {
@@ -42,7 +64,7 @@ class MovieInfoViewModel @Inject constructor(
                     if (res.data != null) {
                         emit(MovieInfoState.Success(res.data))
                     } else {
-                        emit(MovieInfoState.Error(Throwable("we can't found info for this movie!")))
+                        emit(MovieInfoState.Error(Throwable("We can't find info for this movie!")))
                     }
                 }
 
@@ -57,11 +79,17 @@ class MovieInfoViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    /**
+     * Function to trigger a retry attempt for fetching movie information.
+     */
     fun onRetryClicked() {
         getMovieInfoState(movieId)
     }
 }
 
+/**
+ * Sealed interface representing the possible states of the Movie Info screen.
+ */
 sealed interface MovieInfoState : Serializable {
     object Loading : MovieInfoState
     data class Error(val throwable: Throwable) : MovieInfoState

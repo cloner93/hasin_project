@@ -4,15 +4,22 @@ import JamUnitTestFakeAssetManager
 import com.google.gson.Gson
 import com.milad.hasin_project.data.TmdbClientNetwork
 import com.milad.hasin_project.data.di.Dispatcher
+import com.milad.hasin_project.data.di.TmdbDispatchers
 import com.milad.hasin_project.domain.model.FullMovieDetail
 import com.milad.hasin_project.domain.model.PopularMoviesResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.io.InputStreamReader
 import javax.inject.Inject
-import retrofit2.Response
-import com.milad.hasin_project.data.di.TmdbDispatchers
 
+/**
+ * The `FakeTmdbNetworkData` class implements the [TmdbClientNetwork] interface for providing fake network data.
+ *
+ * @property ioDispatcher The coroutine dispatcher for IO operations.
+ * @property networkJson The Gson instance for JSON parsing.
+ * @property assets The [FakeAssetManager] for accessing fake assets.
+ */
 class FakeTmdbNetworkData @Inject constructor(
     @Dispatcher(TmdbDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val networkJson: Gson,
@@ -24,6 +31,14 @@ class FakeTmdbNetworkData @Inject constructor(
         private const val MOVIE_ASSET = "movie.json"
     }
 
+    /**
+     * Retrieves fake popular movies data from the assets.
+     *
+     * @param page The page number for pagination.
+     * @param language The language for the response.
+     * @param region The region for the response.
+     * @return A [PopularMoviesResponse] representing the fake popular movies data.
+     */
     override suspend fun getPopularMovies(
         page: Int?,
         language: String?,
@@ -34,6 +49,14 @@ class FakeTmdbNetworkData @Inject constructor(
         }
     }
 
+    /**
+     * Retrieves fake movie data from the assets.
+     *
+     * @param movieId The ID of the movie to retrieve.
+     * @param language The language for the response.
+     * @param appendToResponse Additional parameters to append to the response.
+     * @return A [Response] containing the fake [FullMovieDetail] data.
+     */
     override suspend fun getMovie(
         movieId: Int,
         language: String?,

@@ -15,7 +15,9 @@ import org.junit.Test
 import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-
+/**
+ * Unit test for the [MovieInfoViewModel] class.
+ */
 class MovieInfoViewModelTest {
     @Mock
     private lateinit var usecase: GetMovieUseCase
@@ -24,17 +26,21 @@ class MovieInfoViewModelTest {
     private lateinit var savedState: SavedStateHandle
     private lateinit var viewModel: MovieInfoViewModel
 
+    // Dispatcher for testing
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
 
+    // Setup before each test
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
     }
 
+    // Test case for emitting MovieInfoState loading first
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test emit MovieInfoState loading first`() = runTest(testDispatcher) {
+        // Mock saved state and use case
         given(savedState.get<String>("movie_id")).willReturn("12345")
         given(usecase.invoke(12345)).willReturn(
             flow {
@@ -42,6 +48,7 @@ class MovieInfoViewModelTest {
             }
         )
 
+        // Create the view model
         viewModel = MovieInfoViewModel(usecase, savedState)
 
         val actual = mutableStateListOf<MovieInfoState>()
@@ -52,10 +59,11 @@ class MovieInfoViewModelTest {
         assertEquals(actual[0], MovieInfoState.Loading)
     }
 
-
+    // Test case for the second emit returning an error
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test second emit return error`() = runTest(testDispatcher) {
+        // Mock saved state and use case
         given(savedState.get<String>("movie_id")).willReturn("12345")
         given(usecase.invoke(12345)).willReturn(
             flow {
@@ -63,6 +71,7 @@ class MovieInfoViewModelTest {
                 emit(Result.error("error", null))
             }
         )
+        // Create the view model
         viewModel = MovieInfoViewModel(usecase, savedState)
 
         val actual = mutableStateListOf<MovieInfoState>()

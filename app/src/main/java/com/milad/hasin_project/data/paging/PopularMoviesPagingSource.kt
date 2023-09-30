@@ -7,10 +7,27 @@ import com.milad.hasin_project.domain.model.Movie
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * The `PopularMoviesPagingSource` class is a [PagingSource] implementation responsible for loading pages
+ * of popular movies using the [TmdbClientNetwork].
+ *
+ * @param network The network client for interacting with the TMDb API.
+ *
+ * @see Singleton
+ * @see TmdbClientNetwork
+ * @see PagingSource
+ */
 @Singleton
 class PopularMoviesPagingSource @Inject constructor(
     private val network: TmdbClientNetwork
 ) : PagingSource<Int, Movie>() {
+
+    /**
+     * Determines the refresh key for the given [PagingState].
+     *
+     * @param state The current [PagingState].
+     * @return The refresh key.
+     */
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
@@ -18,6 +35,12 @@ class PopularMoviesPagingSource @Inject constructor(
         }
     }
 
+    /**
+     * Loads the requested page of popular movies.
+     *
+     * @param params The [LoadParams] indicating the load position and size.
+     * @return The result of the load operation, either [LoadResult.Page] or [LoadResult.Error].
+     */
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val page = params.key ?: 1

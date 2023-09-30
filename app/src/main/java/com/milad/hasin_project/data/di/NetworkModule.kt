@@ -11,19 +11,43 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
+/**
+ * The `NetworkModule` object is a Dagger Hilt module that provides network-related dependencies
+ * for the application.
+ *
+ * @see Module
+ * @see InstallIn
+ * @see SingletonComponent
+ * @see Provides
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Provides the IO dispatcher for coroutine operations with the specified [Dispatcher] qualifier.
+     *
+     * @return The IO dispatcher.
+     */
     @Provides
     @Dispatcher(TmdbDispatchers.IO)
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
+    /**
+     * Provides the API key used for TMDb API requests.
+     *
+     * @return The TMDb API key.
+     */
     @Provides
     fun apiKey(): String {
         return "55957fcf3ba81b137f8fc01ac5a31fb5"
     }
 
+    /**
+     * Provides an instance of [HttpLoggingInterceptor] for logging HTTP requests and responses.
+     *
+     * @return The logging interceptor.
+     */
     @Singleton
     @Provides
     fun okHttpLogger(): HttpLoggingInterceptor {
@@ -35,6 +59,13 @@ object NetworkModule {
         return okHttpLogger
     }
 
+    /**
+     * Provides an instance of [Call.Factory] for making HTTP requests with the specified interceptors.
+     *
+     * @param loggingInterceptor The logging interceptor.
+     * @param apiKey The TMDb API key.
+     * @return The OkHttpClient.
+     */
     @Singleton
     @Provides
     fun okHttpClient(loggingInterceptor: HttpLoggingInterceptor, apiKey: String): Call.Factory =
